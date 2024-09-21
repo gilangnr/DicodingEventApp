@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.dicodingeventapp.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_upcomming"
+        android:name="com.example.dicodingeventapp.ui.upcomming.UpcommingFragment"
+        android:label="@string/title_upcomming"
+        tools:layout="@layout/fragment_upcomming" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.dicodingeventapp.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_finished"
+        android:name="com.example.dicodingeventapp.ui.finished.FinishedFragment"
+        android:label="@string/title_finished"
+        tools:layout="@layout/fragment_finished" />
 </navigation>
