@@ -1,4 +1,4 @@
-package com.example.dicodingeventapp.ui.upcomming
+package com.example.dicodingeventapp.ui.upcoming
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingeventapp.databinding.FragmentUpcommingBinding
 
-class UpcommingFragment : Fragment() {
+class UpcomingFragment : Fragment() {
 
     private var _binding: FragmentUpcommingBinding? = null
 
@@ -22,14 +22,14 @@ class UpcommingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val upcommingViewModel =
-            ViewModelProvider(this).get(UpcommingViewModel::class.java)
+        val upcomingViewModel =
+            ViewModelProvider(this).get(UpcomingViewModel::class.java)
 
         _binding = FragmentUpcommingBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textUpcomming
-        upcommingViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textUpcoming
+        upcomingViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

@@ -7,9 +7,9 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_upcomming"
+        android:id="@+id/navigation_upcoming"
         android:icon="@drawable/baseline_calendar_month_24"
-        android:title="@string/title_upcomming" />
+        android:title="@string/title_upcoming" />
 
     <item
         android:id="@+id/navigation_finished"

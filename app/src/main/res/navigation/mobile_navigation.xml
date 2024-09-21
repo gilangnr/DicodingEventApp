@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_upcomming"
-        android:name="com.example.dicodingeventapp.ui.upcomming.UpcommingFragment"
-        android:label="@string/title_upcomming"
+        android:id="@+id/navigation_upcoming"
+        android:name="com.example.dicodingeventapp.ui.upcoming.UpcomingFragment"
+        android:label="@string/title_upcoming"
         tools:layout="@layout/fragment_upcomming" />
 
     <fragment
