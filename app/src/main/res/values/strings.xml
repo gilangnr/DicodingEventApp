@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_upcoming">Upcoming</string>
     <string name="title_finished">Finished</string>
+    <string name="category">Seminar</string>
+    <string name="owner">oleh: %1$s</string>
+    <string name="quota">sisa kuota: %1$s</string>
 </resources>

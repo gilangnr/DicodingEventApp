@@ -1,20 +1,23 @@
 package com.example.dicodingeventapp.ui.upcoming
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.dicodingeventapp.databinding.FragmentUpcommingBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.dicodingeventapp.databinding.FragmentUpcomingBinding
 
 class UpcomingFragment : Fragment() {
 
-    private var _binding: FragmentUpcommingBinding? = null
+    private var _binding: FragmentUpcomingBinding? = null
+    private lateinit var adapter: UpcomingAdapter
+    private lateinit var viewModel: UpcomingViewModel
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -22,21 +25,38 @@ class UpcomingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val upcomingViewModel =
-            ViewModelProvider(this).get(UpcomingViewModel::class.java)
+        _binding = FragmentUpcomingBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        _binding = FragmentUpcommingBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val textView: TextView = binding.textUpcoming
-        upcomingViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        viewModel = ViewModelProvider(this).get(UpcomingViewModel::class.java)
+
+        adapter = UpcomingAdapter()
+        binding.rvUpcoming.adapter = adapter
+        binding.rvUpcoming.layoutManager = LinearLayoutManager(requireContext())
+
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
         }
-        return root
+
+        viewModel.events.observe(viewLifecycleOwner) { events ->
+            Log.d("UpcomingFragment", "Events size: ${events.size}")
+            adapter.submitList(events)
+        }
+
+        viewModel.loadUpcomingEvents()
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
