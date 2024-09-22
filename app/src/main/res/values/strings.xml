@@ -9,4 +9,7 @@
     <string name="dicoding_event">Dicoding Event</string>
     <string name="upcoming">Upcoming Events</string>
     <string name="finished">Finished Events</string>
+    <string name="begin">Terbuka Hingga: %1$s</string>
+    <string name="quota_detail">Sisa Kuota: %1$d peserta</string>
+    <string name="location">Lokasi: %1$s</string>
 </resources>
