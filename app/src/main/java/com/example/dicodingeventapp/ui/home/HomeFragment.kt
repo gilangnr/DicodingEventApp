@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.dicodingeventapp.databinding.FragmentHomeBinding
 
@@ -17,6 +18,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var upcomingAdapter: HomeUpcomingAdapter
+    private lateinit var finishedAdapter: HomeFinishedAdapter
     private lateinit var viewModel: HomeViewModel
 
 
@@ -34,7 +36,10 @@ class HomeFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         upcomingAdapter = HomeUpcomingAdapter()
+        finishedAdapter = HomeFinishedAdapter()
         binding.viewPagerUpcoming.adapter = upcomingAdapter
+        binding.rvFinishedHome.adapter = finishedAdapter
+        binding.rvFinishedHome.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.upcomingEvents.observe(viewLifecycleOwner) { events ->
             if (events != null && events.isNotEmpty()) {
@@ -44,9 +49,15 @@ class HomeFragment : Fragment() {
             }
         }
 
+        viewModel.finishedEvents.observe(viewLifecycleOwner) { events ->
+            finishedAdapter.submitList(events)
+        }
+
         viewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
+
+
 
     }
 

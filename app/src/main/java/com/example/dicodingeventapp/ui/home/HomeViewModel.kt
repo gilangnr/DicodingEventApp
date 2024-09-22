@@ -15,8 +15,8 @@ import retrofit2.Response
 class HomeViewModel : ViewModel() {
     private val _upcomingEvents = MutableLiveData<List<ListEventsItem>>()
     val upcomingEvents: LiveData<List<ListEventsItem>> get() = _upcomingEvents
-//    private val _finishedEvents = MutableLiveData<List<ListEventsItem>>()
-//    val finishedEvents: LiveData<List<ListEventsItem>> get() = _finishedEvents
+    private val _finishedEvents = MutableLiveData<List<ListEventsItem>>()
+    val finishedEvents: LiveData<List<ListEventsItem>> get() = _finishedEvents
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
@@ -26,6 +26,7 @@ class HomeViewModel : ViewModel() {
 
     init {
         loadUpcomingEvents()
+        loadFinishedEvents()
     }
     fun loadUpcomingEvents() {
         _isLoading.value = true
@@ -39,6 +40,31 @@ class HomeViewModel : ViewModel() {
                 if (response.isSuccessful) {
                     Log.d(TAG, "Number of events: ${response.body()?.listEvents?.size}")
                     _upcomingEvents.value = response.body()?.listEvents
+                } else {
+                    Log.e(TAG,"onFailure: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseListEvent>, t: Throwable) {
+                _isLoading.value = false
+                Log.e(TAG, "onFailure: ${t.message.toString()}")
+            }
+
+        })
+    }
+
+    fun loadFinishedEvents() {
+        _isLoading.value = true
+        val client = ApiConfig.getApiService().getFinished5()
+        client.enqueue(object : Callback<ResponseListEvent> {
+            override fun onResponse(
+                call: Call<ResponseListEvent>,
+                response: Response<ResponseListEvent>
+            ) {
+                _isLoading.value = false
+                if (response.isSuccessful) {
+                    Log.d(TAG, "Number of events: ${response.body()?.listEvents?.size}")
+                    _finishedEvents.value = response.body()?.listEvents
                 } else {
                     Log.e(TAG,"onFailure: ${response.message()}")
                 }
