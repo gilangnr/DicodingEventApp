@@ -11,6 +11,11 @@ interface ApiService {
     @GET("/events")
     fun getUpcoming(@Query("active") active: Int = 1): Call<ResponseListEvent>
 
+    @GET("/events")
+    fun getUpcoming5(@Query("active") active: Int = 1,
+                     @Query("limit") limit: Int = 5
+    ): Call<ResponseListEvent>
+
     @GET("/events/{id}")
     fun getEvent(@Path("id") id: String): Call<ResponseDetail>
 
