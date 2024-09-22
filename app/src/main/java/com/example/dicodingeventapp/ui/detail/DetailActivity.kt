@@ -1,6 +1,9 @@
 package com.example.dicodingeventapp.ui.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +15,8 @@ import com.bumptech.glide.Glide
 import com.example.dicodingeventapp.R
 import com.example.dicodingeventapp.data.response.Event
 import com.example.dicodingeventapp.databinding.ActivityDetailBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class DetailActivity : AppCompatActivity() {
 
@@ -22,12 +27,15 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 
-        val eventId = intent.getStringExtra("EVENT_ID")
+        val eventId = intent.getIntExtra("EVENT_ID", -1)
 
         if (eventId != null) {
-            viewModel.getDetail(eventId)
+            viewModel.getDetail(eventId.toString())
+        } else {
+            Log.e("DetailActivity", "event id is null")
         }
 
         viewModel.event.observe(this) {
@@ -41,16 +49,27 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setDetailData(event: Event) {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+        val date = inputFormat.parse(event.beginTime)
+        val formattedDate = outputFormat.format(date)
+
         binding.nameDetail.text = event.name
         binding.categoryDetail.text = event.category
         binding.descriptionDetail.text = HtmlCompat.fromHtml(event.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
         binding.ownerDetail.text = binding.root.context.getString(R.string.owner, event.ownerName)
         binding.locationDetail.text = binding.root.context.getString(R.string.location, event.cityName)
-        binding.waktuDetail.text = binding.root.context.getString(R.string.begin, event.beginTime)
+        binding.waktuDetail.text = binding.root.context.getString(R.string.begin, formattedDate)
         binding.quotaDetail.text = binding.root.context.getString(R.string.quota_detail, event.quota - event.registrants)
         Glide.with(binding.imgDetail.context)
             .load(event.mediaCover)
             .into(binding.imgDetail)
+
+        binding.btnRegis.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(event.link)
+            startActivity(intent)
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

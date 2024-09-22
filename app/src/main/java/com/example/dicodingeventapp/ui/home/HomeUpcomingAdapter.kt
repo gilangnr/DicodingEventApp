@@ -9,13 +9,17 @@ import com.bumptech.glide.Glide
 import com.example.dicodingeventapp.data.response.ListEventsItem
 import com.example.dicodingeventapp.databinding.ItemCarouselUpcomingBinding
 
-class HomeUpcomingAdapter: ListAdapter<ListEventsItem, HomeUpcomingAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class HomeUpcomingAdapter(private val onItemClick: (ListEventsItem) -> Unit ): ListAdapter<ListEventsItem, HomeUpcomingAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     class MyViewHolder(val binding: ItemCarouselUpcomingBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(event: ListEventsItem) {
+        fun bind(event: ListEventsItem, onItemClick: (ListEventsItem) -> Unit ) {
             Glide.with(binding.imgHomeUpcoming.context)
                 .load(event.mediaCover)
                 .into(binding.imgHomeUpcoming)
+
+            binding.root.setOnClickListener {
+                onItemClick(event)
+            }
         }
     }
 
@@ -26,7 +30,7 @@ class HomeUpcomingAdapter: ListAdapter<ListEventsItem, HomeUpcomingAdapter.MyVie
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val event = getItem(position)
-        holder.bind(event)
+        holder.bind(event, onItemClick)
     }
 
 

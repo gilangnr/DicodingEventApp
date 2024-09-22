@@ -1,5 +1,6 @@
 package com.example.dicodingeventapp.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.dicodingeventapp.databinding.FragmentHomeBinding
+import com.example.dicodingeventapp.ui.detail.DetailActivity
 
 class HomeFragment : Fragment() {
 
@@ -35,7 +37,11 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        upcomingAdapter = HomeUpcomingAdapter()
+        upcomingAdapter = HomeUpcomingAdapter { event ->
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.putExtra("EVENT_ID", event.id)
+            startActivity(intent)
+        }
         finishedAdapter = HomeFinishedAdapter()
         binding.viewPagerUpcoming.adapter = upcomingAdapter
         binding.rvFinishedHome.adapter = finishedAdapter
