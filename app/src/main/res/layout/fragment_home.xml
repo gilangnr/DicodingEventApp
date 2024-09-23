@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.HomeFragment">
 
  <LinearLayout
@@ -19,23 +19,22 @@
       android:textSize="24sp"
       android:textColor="@color/purple_500"
       android:textStyle="bold"
-      android:layout_margin="8dp"/>
+      android:layout_marginTop="8dp"
+      android:layout_marginHorizontal="16dp"/>
 
-  <com.google.android.material.search.SearchView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:hint="Cari event" />
   <com.google.android.material.search.SearchBar
+      android:id="@+id/search_bar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:hint="Cari event"/>
+      android:layout_marginHorizontal="16dp"
+      android:hint="@string/search_hint"/>
 
   <TextView
       android:id="@+id/txt_upcoming_event"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/upcoming"
-      android:layout_marginStart="8dp"
+      android:layout_marginStart="16dp"
       android:layout_marginTop="8dp"/>
 
   <androidx.viewpager2.widget.ViewPager2
@@ -49,7 +48,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:text="@string/finished"
-      android:layout_marginStart="8dp"
+      android:layout_marginStart="16dp"
       android:layout_marginTop="16dp"/>
 
   <androidx.recyclerview.widget.RecyclerView

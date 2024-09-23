@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.dicodingeventapp.databinding.FragmentHomeBinding
 import com.example.dicodingeventapp.ui.detail.DetailActivity
+import com.example.dicodingeventapp.ui.search.SearchActivity
 
 class HomeFragment : Fragment() {
 
@@ -50,6 +51,12 @@ class HomeFragment : Fragment() {
         binding.viewPagerUpcoming.adapter = upcomingAdapter
         binding.rvFinishedHome.adapter = finishedAdapter
         binding.rvFinishedHome.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.searchBar.setOnClickListener {
+            val intent = Intent(requireContext(), SearchActivity::class.java)
+            startActivity(intent)
+        }
+
 
         viewModel.upcomingEvents.observe(viewLifecycleOwner) { events ->
             if (events != null && events.isNotEmpty()) {
