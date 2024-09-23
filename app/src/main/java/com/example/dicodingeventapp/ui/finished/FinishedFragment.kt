@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -50,9 +51,15 @@ class FinishedFragment : Fragment() {
         }
 
         viewModel.events.observe(viewLifecycleOwner) { events ->
-            Log.d("FinishedFragment", "Events size: ${events.size}")
             adapter.submitList(events)
         }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            message?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
     }
 

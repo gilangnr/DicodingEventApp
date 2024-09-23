@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,6 +20,15 @@
       android:textColor="@color/purple_500"
       android:textStyle="bold"
       android:layout_margin="8dp"/>
+
+  <com.google.android.material.search.SearchView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Cari event" />
+  <com.google.android.material.search.SearchBar
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="Cari event"/>
 
   <TextView
       android:id="@+id/txt_upcoming_event"
