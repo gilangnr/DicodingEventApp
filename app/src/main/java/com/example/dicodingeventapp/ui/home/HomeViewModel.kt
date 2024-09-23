@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.example.dicodingeventapp.data.response.ListEventsItem
 import com.example.dicodingeventapp.data.response.ResponseListEvent
 import com.example.dicodingeventapp.data.retrofit.ApiConfig
-import com.example.dicodingeventapp.ui.finished.FinishedViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,11 +21,6 @@ class HomeViewModel : ViewModel() {
 
     companion object {
         private const val TAG = "HomeViewModel"
-    }
-
-    init {
-        loadUpcomingEvents()
-        loadFinishedEvents()
     }
     fun loadUpcomingEvents() {
         _isLoading.value = true

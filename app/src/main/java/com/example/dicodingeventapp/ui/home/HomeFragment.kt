@@ -10,13 +10,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.example.dicodingeventapp.databinding.FragmentHomeBinding
 import com.example.dicodingeventapp.ui.detail.DetailActivity
 import com.example.dicodingeventapp.ui.search.SearchActivity
@@ -42,7 +39,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         upcomingAdapter = HomeUpcomingAdapter { event ->
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.putExtra("EVENT_ID", event.id)
@@ -63,8 +60,9 @@ class HomeFragment : Fragment() {
         }
 
 
-        // Cek koneksi internet sebelum mengamati data
         if (isNetworkAvailable()) {
+            viewModel.loadUpcomingEvents()
+            viewModel.loadFinishedEvents()
             viewModel.upcomingEvents.observe(viewLifecycleOwner) { events ->
                 if (events != null && events.isNotEmpty()) {
                     upcomingAdapter.submitList(events)
@@ -77,7 +75,7 @@ class HomeFragment : Fragment() {
                 finishedAdapter.submitList(events)
             }
         } else {
-            showAlertDialog("Tidak ada koneksi internet", "Mohon periksa koneksi internet Anda.")
+            showAlertDialog()
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
@@ -95,10 +93,10 @@ class HomeFragment : Fragment() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun showAlertDialog(title: String, message: String) {
+    private fun showAlertDialog() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(title)
-        builder.setMessage(message)
+        builder.setTitle("Tidak ada koneksi internet")
+        builder.setMessage("Mohon periksa koneksi internet Anda.")
         builder.setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
         val dialog = builder.create()
         dialog.show()

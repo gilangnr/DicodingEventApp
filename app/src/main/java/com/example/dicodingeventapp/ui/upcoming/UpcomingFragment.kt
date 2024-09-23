@@ -10,12 +10,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingeventapp.databinding.FragmentUpcomingBinding
 import com.example.dicodingeventapp.ui.detail.DetailActivity
 
@@ -39,7 +37,7 @@ class UpcomingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(UpcomingViewModel::class.java)
+        viewModel = ViewModelProvider(this)[UpcomingViewModel::class.java]
 
         adapter = UpcomingAdapter { event ->
             val intent = Intent(requireContext(), DetailActivity::class.java)
@@ -63,7 +61,7 @@ class UpcomingFragment : Fragment() {
 
             viewModel.loadUpcomingEvents()
         } else {
-            showAlertDialog("Tidak ada koneksi internet", "Mohon periksa koneksi internet Anda.")
+            showAlertDialog()
         }
     }
 
@@ -76,10 +74,10 @@ class UpcomingFragment : Fragment() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun showAlertDialog(title: String, message: String) {
+    private fun showAlertDialog() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(title)
-        builder.setMessage(message)
+        builder.setTitle("Tidak ada koneksi internet")
+        builder.setMessage("Mohon periksa koneksi internet Anda.")
         builder.setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
         val dialog = builder.create()
         dialog.show()

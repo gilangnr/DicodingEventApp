@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/white"
     app:cardCornerRadius="12dp"
     android:layout_margin="6dp"
     app:cardElevation="4dp">
@@ -18,7 +17,8 @@
             android:id="@+id/img_upcoming"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="@string/app_name" />
 
         <TextView
             android:id="@+id/txt_category_upcoming"
@@ -55,7 +55,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginStart="16dp"
             android:text="@string/owner"
-            android:textSize="10sp"/>
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/txt_quota_upcoming"

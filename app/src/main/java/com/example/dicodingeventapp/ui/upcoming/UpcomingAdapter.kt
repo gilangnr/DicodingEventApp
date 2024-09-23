@@ -35,7 +35,7 @@ class UpcomingAdapter(private val onItemClick: (ListEventsItem) -> Unit ): ListA
         return MyViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: UpcomingAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val event = getItem(position)
         holder.bind(event, onItemClick)
     }

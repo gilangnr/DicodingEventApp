@@ -10,8 +10,10 @@
     <string name="upcoming">Upcoming Events</string>
     <string name="finished">Finished Events</string>
     <string name="begin">Terbuka Hingga: %1$s</string>
-    <string name="quota_detail">Sisa Kuota: %1$d peserta</string>
+    <string name="quota_detail">Sisa Kuota: %1$d</string>
     <string name="location">Lokasi: %1$s</string>
     <string name="search_hint">Cari event</string>
-    <string name="event_tidak_ada">Event tidak ada</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="register">Register</string>
+    <string name="recomendation">Recommendation event for you!</string>
 </resources>

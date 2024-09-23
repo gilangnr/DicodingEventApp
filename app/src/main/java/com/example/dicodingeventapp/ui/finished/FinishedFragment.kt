@@ -6,20 +6,13 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.dicodingeventapp.databinding.FragmentFinishedBinding
 import com.example.dicodingeventapp.ui.detail.DetailActivity
 
@@ -42,7 +35,7 @@ class FinishedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(FinishedViewModel::class.java)
+        viewModel = ViewModelProvider(this)[FinishedViewModel::class.java]
         adapter = FinishedAdapter { event ->
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.putExtra("EVENT_ID", event.id)
@@ -56,11 +49,12 @@ class FinishedFragment : Fragment() {
         }
 
         if (isNetworkAvailable()) {
+            viewModel.loadFinishedEvents()
             viewModel.events.observe(viewLifecycleOwner) { events ->
                 adapter.submitList(events)
             }
         } else {
-            showAlertDialog("Tidak ada koneksi internet", "Mohon periksa koneksi internet Anda.")
+            showAlertDialog()
         }
 
 
@@ -74,10 +68,10 @@ class FinishedFragment : Fragment() {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun showAlertDialog(title: String, message: String) {
+    private fun showAlertDialog() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(title)
-        builder.setMessage(message)
+        builder.setTitle("Tidak ada koneksi internet")
+        builder.setMessage("Mohon periksa koneksi internet Anda.")
         builder.setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
         val dialog = builder.create()
         dialog.show()

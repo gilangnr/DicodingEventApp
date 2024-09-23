@@ -3,7 +3,6 @@ package com.example.dicodingeventapp.ui.search
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -23,7 +22,7 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
         adapter = HomeFinishedAdapter{ event ->
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("EVENT_ID", event.id)
@@ -36,7 +35,7 @@ class SearchActivity : AppCompatActivity() {
         binding.searchView.setupWithSearchBar(binding.searchBar)
 
 
-        binding.searchView.editText?.setOnEditorActionListener { textView, actionId, event ->
+        binding.searchView.editText.setOnEditorActionListener { textView, actionId, event ->
             val query = textView.text.toString()
             if (query.isNotEmpty()) {
                 viewModel.searchEvent(query)
@@ -48,7 +47,7 @@ class SearchActivity : AppCompatActivity() {
             adapter.submitList(events)
 
             if (events.isEmpty()) {
-                showAlertDialog("Event tidak ditemukan", "Maaf, tidak ada event yang sesuai dengan pencarian Anda.")
+                showAlertDialog()
             }
         }
 
@@ -59,10 +58,10 @@ class SearchActivity : AppCompatActivity() {
 
     }
 
-    private fun showAlertDialog(title: String, message: String) {
+    private fun showAlertDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(title)
-        builder.setMessage(message)
+        builder.setTitle("Event tidak ditemukan")
+        builder.setMessage("Maaf, tidak ada event yang sesuai dengan pencarian Anda.")
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
         }

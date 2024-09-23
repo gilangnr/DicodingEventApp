@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/white"
     app:cardCornerRadius="12dp"
     app:cardUseCompatPadding="true"
     android:layout_marginHorizontal="8dp"
@@ -15,7 +14,8 @@
             android:id="@+id/img_home_upcoming"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="@string/app_name" />
 
 
 </androidx.cardview.widget.CardView>

@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.example.dicodingeventapp.data.response.ListEventsItem
 import com.example.dicodingeventapp.data.response.ResponseListEvent
 import com.example.dicodingeventapp.data.retrofit.ApiConfig
-import com.example.dicodingeventapp.ui.upcoming.UpcomingViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,9 +24,7 @@ class FinishedViewModel : ViewModel() {
         private const val TAG = "FinishedViewModel"
     }
 
-    init {
-        loadFinishedEvents()
-    }
+
     fun loadFinishedEvents() {
         _isLoading.value = true
         val client = ApiConfig.getApiService().getFinished()
