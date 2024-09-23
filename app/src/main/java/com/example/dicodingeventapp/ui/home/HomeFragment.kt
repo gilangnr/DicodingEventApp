@@ -60,20 +60,21 @@ class HomeFragment : Fragment() {
         }
 
 
+        viewModel.upcomingEvents.observe(viewLifecycleOwner) { events ->
+            if (events != null && events.isNotEmpty()) {
+                upcomingAdapter.submitList(events)
+            } else {
+                Log.d("HomeFragment", "No events available")
+            }
+        }
+
+        viewModel.finishedEvents.observe(viewLifecycleOwner) { events ->
+            finishedAdapter.submitList(events)
+        }
+
         if (isNetworkAvailable()) {
             viewModel.loadUpcomingEvents()
             viewModel.loadFinishedEvents()
-            viewModel.upcomingEvents.observe(viewLifecycleOwner) { events ->
-                if (events != null && events.isNotEmpty()) {
-                    upcomingAdapter.submitList(events)
-                } else {
-                    Log.d("HomeFragment", "No events available")
-                }
-            }
-
-            viewModel.finishedEvents.observe(viewLifecycleOwner) { events ->
-                finishedAdapter.submitList(events)
-            }
         } else {
             showAlertDialog()
         }

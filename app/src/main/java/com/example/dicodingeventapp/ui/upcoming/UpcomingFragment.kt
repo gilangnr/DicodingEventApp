@@ -48,17 +48,16 @@ class UpcomingFragment : Fragment() {
         binding.rvUpcoming.layoutManager = LinearLayoutManager(requireContext())
 
 
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            showLoading(it)
+        }
+
+        viewModel.events.observe(viewLifecycleOwner) { events ->
+            Log.d("UpcomingFragment", "Events size: ${events.size}")
+            adapter.submitList(events)
+        }
 
         if (isNetworkAvailable()) {
-            viewModel.isLoading.observe(viewLifecycleOwner) {
-                showLoading(it)
-            }
-
-            viewModel.events.observe(viewLifecycleOwner) { events ->
-                Log.d("UpcomingFragment", "Events size: ${events.size}")
-                adapter.submitList(events)
-            }
-
             viewModel.loadUpcomingEvents()
         } else {
             showAlertDialog()

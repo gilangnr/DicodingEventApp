@@ -47,12 +47,12 @@ class FinishedFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
+        viewModel.events.observe(viewLifecycleOwner) { events ->
+            adapter.submitList(events)
+        }
 
         if (isNetworkAvailable()) {
             viewModel.loadFinishedEvents()
-            viewModel.events.observe(viewLifecycleOwner) { events ->
-                adapter.submitList(events)
-            }
         } else {
             showAlertDialog()
         }
