@@ -20,9 +20,6 @@ class FinishedViewModel : ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String> get() = _errorMessage
-
 
     companion object {
         private const val TAG = "FinishedViewModel"
@@ -44,13 +41,13 @@ class FinishedViewModel : ViewModel() {
                     Log.d(TAG, "Number of events: ${response.body()?.listEvents?.size}")
                     _events.value = response.body()?.listEvents
                 } else {
-                    _errorMessage.value = "Gagal mendapatkan data: ${response.message()}"
+                    Log.d(TAG, "onFailure: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<ResponseListEvent>, t: Throwable) {
                 _isLoading.value = false
-                _errorMessage.value = "Error: ${t.message}"
+                Log.d(TAG, "onFailure: ${t.message.toString()}")
             }
 
         })

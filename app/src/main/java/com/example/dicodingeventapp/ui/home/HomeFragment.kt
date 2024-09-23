@@ -1,12 +1,17 @@
 package com.example.dicodingeventapp.ui.home
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -58,25 +63,28 @@ class HomeFragment : Fragment() {
         }
 
 
-        viewModel.upcomingEvents.observe(viewLifecycleOwner) { events ->
-            if (events != null && events.isNotEmpty()) {
-                upcomingAdapter.submitList(events)
-            } else {
-                Log.d("HomeFragment", "No events available")
+        // Cek koneksi internet sebelum mengamati data
+        if (isNetworkAvailable()) {
+            viewModel.upcomingEvents.observe(viewLifecycleOwner) { events ->
+                if (events != null && events.isNotEmpty()) {
+                    upcomingAdapter.submitList(events)
+                } else {
+                    Log.d("HomeFragment", "No events available")
+                }
             }
-        }
 
-        viewModel.finishedEvents.observe(viewLifecycleOwner) { events ->
-            finishedAdapter.submitList(events)
+            viewModel.finishedEvents.observe(viewLifecycleOwner) { events ->
+                finishedAdapter.submitList(events)
+            }
+        } else {
+            showAlertDialog("Tidak ada koneksi internet", "Mohon periksa koneksi internet Anda.")
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
             showLoading(it)
         }
-
-
-
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -85,5 +93,27 @@ class HomeFragment : Fragment() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showAlertDialog(title: String, message: String) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val networkCapabilities = connectivityManager.activeNetwork?.let {
+                connectivityManager.getNetworkCapabilities(it)
+            }
+            return networkCapabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+        } else {
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected
+        }
     }
 }
