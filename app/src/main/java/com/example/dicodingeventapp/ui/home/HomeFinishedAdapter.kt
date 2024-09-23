@@ -11,14 +11,18 @@ import com.example.dicodingeventapp.data.response.ListEventsItem
 import com.example.dicodingeventapp.databinding.ItemFinishedHomeBinding
 
 
-class HomeFinishedAdapter: ListAdapter<ListEventsItem, HomeFinishedAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class HomeFinishedAdapter(private val onItemClick: (ListEventsItem) -> Unit ): ListAdapter<ListEventsItem, HomeFinishedAdapter.MyViewHolder>(DIFF_CALLBACK) {
     class MyViewHolder(val binding: ItemFinishedHomeBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(event: ListEventsItem) {
+        fun bind(event: ListEventsItem, onItemClick:(ListEventsItem) -> Unit ) {
             Glide.with(binding.imgFinishedHome.context)
                 .load(event.imageLogo)
                 .into(binding.imgFinishedHome)
             binding.nameFinishedHome.text = event.name
             binding.ownerFinishedHome.text = binding.root.context.getString(R.string.owner, event.ownerName)
+
+            binding.root.setOnClickListener {
+                onItemClick(event)
+            }
         }
     }
 
@@ -29,7 +33,7 @@ class HomeFinishedAdapter: ListAdapter<ListEventsItem, HomeFinishedAdapter.MyVie
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val event = getItem(position)
-        holder.bind(event)
+        holder.bind(event, onItemClick)
     }
 
     companion object {

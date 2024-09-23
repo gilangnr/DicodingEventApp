@@ -1,5 +1,6 @@
 package com.example.dicodingeventapp.ui.upcoming
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dicodingeventapp.databinding.FragmentUpcomingBinding
+import com.example.dicodingeventapp.ui.detail.DetailActivity
 
 class UpcomingFragment : Fragment() {
 
@@ -34,7 +36,11 @@ class UpcomingFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(UpcomingViewModel::class.java)
 
-        adapter = UpcomingAdapter()
+        adapter = UpcomingAdapter { event ->
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.putExtra("EVENT_ID", event.id)
+            startActivity(intent)
+        }
         binding.rvUpcoming.adapter = adapter
         binding.rvUpcoming.layoutManager = LinearLayoutManager(requireContext())
 

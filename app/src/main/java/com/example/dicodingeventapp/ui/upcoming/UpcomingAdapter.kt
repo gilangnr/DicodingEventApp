@@ -10,9 +10,9 @@ import com.example.dicodingeventapp.R
 import com.example.dicodingeventapp.data.response.ListEventsItem
 import com.example.dicodingeventapp.databinding.ItemUpcomingBinding
 
-class UpcomingAdapter: ListAdapter<ListEventsItem, UpcomingAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class UpcomingAdapter(private val onItemClick: (ListEventsItem) -> Unit ): ListAdapter<ListEventsItem, UpcomingAdapter.MyViewHolder>(DIFF_CALLBACK) {
     class MyViewHolder(val binding: ItemUpcomingBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(event: ListEventsItem) {
+        fun bind(event: ListEventsItem, onItemClick: (ListEventsItem) -> Unit) {
             binding.txtNameUpcoming.text = event.name
             binding.txtCategoryUpcoming.text = event.category
             binding.txtOwnerUpcoming.text = binding.root.context.getString(R.string.owner, event.ownerName)
@@ -20,6 +20,10 @@ class UpcomingAdapter: ListAdapter<ListEventsItem, UpcomingAdapter.MyViewHolder>
             Glide.with(binding.imgUpcoming.context)
                 .load(event.imageLogo)
                 .into(binding.imgUpcoming)
+
+            binding.root.setOnClickListener {
+                onItemClick(event)
+            }
         }
     }
 
@@ -33,7 +37,7 @@ class UpcomingAdapter: ListAdapter<ListEventsItem, UpcomingAdapter.MyViewHolder>
 
     override fun onBindViewHolder(holder: UpcomingAdapter.MyViewHolder, position: Int) {
         val event = getItem(position)
-        holder.bind(event)
+        holder.bind(event, onItemClick)
     }
 
     companion object {

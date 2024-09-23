@@ -42,7 +42,11 @@ class HomeFragment : Fragment() {
             intent.putExtra("EVENT_ID", event.id)
             startActivity(intent)
         }
-        finishedAdapter = HomeFinishedAdapter()
+        finishedAdapter = HomeFinishedAdapter{ event ->
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.putExtra("EVENT_ID", event.id)
+            startActivity(intent)
+        }
         binding.viewPagerUpcoming.adapter = upcomingAdapter
         binding.rvFinishedHome.adapter = finishedAdapter
         binding.rvFinishedHome.layoutManager = LinearLayoutManager(requireContext())

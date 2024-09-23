@@ -1,5 +1,6 @@
 package com.example.dicodingeventapp.ui.finished
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.dicodingeventapp.databinding.FragmentFinishedBinding
+import com.example.dicodingeventapp.ui.detail.DetailActivity
 
 class FinishedFragment : Fragment() {
 
@@ -35,7 +37,11 @@ class FinishedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(FinishedViewModel::class.java)
-        adapter = FinishedAdapter()
+        adapter = FinishedAdapter { event ->
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.putExtra("EVENT_ID", event.id)
+            startActivity(intent)
+        }
         binding.rvFinished.adapter = adapter
         binding.rvFinished.layoutManager = GridLayoutManager(requireContext(), 2)
 

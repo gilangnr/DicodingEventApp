@@ -9,13 +9,17 @@ import com.bumptech.glide.Glide
 import com.example.dicodingeventapp.data.response.ListEventsItem
 import com.example.dicodingeventapp.databinding.ItemFinishedBinding
 
-class FinishedAdapter: ListAdapter<ListEventsItem, FinishedAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class FinishedAdapter(private val onItemClick: (ListEventsItem) -> Unit ): ListAdapter<ListEventsItem, FinishedAdapter.MyViewHolder>(DIFF_CALLBACK) {
     class MyViewHolder(val binding: ItemFinishedBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(event: ListEventsItem) {
+        fun bind(event: ListEventsItem, onItemClick: (ListEventsItem) -> Unit) {
             binding.txtNameFinished.text = event.name
             Glide.with(binding.imgFinished.context)
                 .load(event.imageLogo)
                 .into(binding.imgFinished)
+
+            binding.root.setOnClickListener {
+                onItemClick(event)
+            }
         }
     }
 
@@ -27,7 +31,7 @@ class FinishedAdapter: ListAdapter<ListEventsItem, FinishedAdapter.MyViewHolder>
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val event = getItem(position)
-        holder.bind(event)
+        holder.bind(event, onItemClick)
     }
 
     companion object {
