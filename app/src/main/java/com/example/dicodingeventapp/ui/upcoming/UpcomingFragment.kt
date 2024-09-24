@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dicodingeventapp.R
 import com.example.dicodingeventapp.databinding.FragmentUpcomingBinding
 import com.example.dicodingeventapp.ui.detail.DetailActivity
 
@@ -75,8 +76,8 @@ class UpcomingFragment : Fragment() {
 
     private fun showAlertDialog() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Tidak ada koneksi internet")
-        builder.setMessage("Mohon periksa koneksi internet Anda.")
+        builder.setTitle(getString(R.string.tidak_ada_koneksi_internet))
+        builder.setMessage(getString(R.string.message_internet))
         builder.setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
         val dialog = builder.create()
         dialog.show()

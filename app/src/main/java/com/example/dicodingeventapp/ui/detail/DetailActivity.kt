@@ -94,8 +94,8 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showAlertDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Tidak ada koneksi internet")
-        builder.setMessage("Mohon periksa koneksi internet Anda.")
+        builder.setTitle(getString(R.string.tidak_ada_koneksi_internet))
+        builder.setMessage(getString(R.string.message_internet))
         builder.setPositiveButton("OK") { dialog, _ -> finish() }
         val dialog = builder.create()
         dialog.show()

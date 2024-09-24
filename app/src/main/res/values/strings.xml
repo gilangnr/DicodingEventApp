@@ -17,4 +17,10 @@
     <string name="register">Register</string>
     <string name="recomendation">Recommendation event for you!</string>
     <string name="detail">Detail Event</string>
+    <string name="search">Search Event</string>
+    <string name="tidak_ada_koneksi_internet">Tidak ada koneksi internet</string>
+    <string name="message_internet">Mohon periksa koneksi internet Anda.</string>
+    <string name="event_tidak_ditemukan">Event tidak ditemukan</string>
+    <string name="message_not_found">Maaf, tidak ada event yang sesuai dengan pencarian Anda.</string>
+
 </resources>

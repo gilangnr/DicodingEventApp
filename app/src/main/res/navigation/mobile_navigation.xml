@@ -28,4 +28,10 @@
         android:name="com.example.dicodingeventapp.ui.detail.DetailActivity"
         android:label="@string/detail"
         tools:layout="@layout/activity_detail"/>
+
+    <activity
+        android:id="@+id/navigation_search"
+        android:name="com.example.dicodingeventapp.ui.search.SearchActivity"
+        android:label="@string/search"
+        tools:layout="@layout/activity_search"/>
 </navigation>

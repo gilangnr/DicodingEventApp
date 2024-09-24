@@ -2,11 +2,13 @@ package com.example.dicodingeventapp.ui.search
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dicodingeventapp.R
 import com.example.dicodingeventapp.databinding.ActivitySearchBinding
 import com.example.dicodingeventapp.ui.detail.DetailActivity
 import com.example.dicodingeventapp.ui.home.HomeFinishedAdapter
@@ -21,6 +23,9 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.title = getString(R.string.search)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
         adapter = HomeFinishedAdapter{ event ->
@@ -58,10 +63,19 @@ class SearchActivity : AppCompatActivity() {
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun showAlertDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Event tidak ditemukan")
-        builder.setMessage("Maaf, tidak ada event yang sesuai dengan pencarian Anda.")
+        builder.setTitle(getString(R.string.event_tidak_ditemukan))
+        builder.setMessage(getString(R.string.message_not_found))
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
         }
