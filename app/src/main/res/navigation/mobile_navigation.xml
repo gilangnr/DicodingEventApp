@@ -22,4 +22,10 @@
         android:name="com.example.dicodingeventapp.ui.finished.FinishedFragment"
         android:label="@string/title_finished"
         tools:layout="@layout/fragment_finished" />
+
+    <activity
+        android:id="@+id/navigation_detail"
+        android:name="com.example.dicodingeventapp.ui.detail.DetailActivity"
+        android:label="@string/detail"
+        tools:layout="@layout/activity_detail"/>
 </navigation>

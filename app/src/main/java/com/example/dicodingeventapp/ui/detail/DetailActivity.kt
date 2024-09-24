@@ -1,10 +1,16 @@
 package com.example.dicodingeventapp.ui.detail
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
@@ -24,16 +30,20 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.title = getString(R.string.detail)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
 
         val eventId = intent.getIntExtra("EVENT_ID", -1)
 
-        if (eventId != null) {
+        if (isNetworkAvailable()) {
             viewModel.getDetail(eventId.toString())
         } else {
-            Log.e("DetailActivity", "event id is null")
+            showAlertDialog()
         }
+
 
         viewModel.event.observe(this) {
             setDetailData(it)
@@ -43,6 +53,15 @@ class DetailActivity : AppCompatActivity() {
             showLoading(it)
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setDetailData(event: Event) {
@@ -71,5 +90,26 @@ class DetailActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun showAlertDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Tidak ada koneksi internet")
+        builder.setMessage("Mohon periksa koneksi internet Anda.")
+        builder.setPositiveButton("OK") { dialog, _ -> finish() }
+        val dialog = builder.create()
+        dialog.show()
+    }
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val networkCapabilities = connectivityManager.activeNetwork?.let {
+                connectivityManager.getNetworkCapabilities(it)
+            }
+            return networkCapabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+        } else {
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected
+        }
     }
 }

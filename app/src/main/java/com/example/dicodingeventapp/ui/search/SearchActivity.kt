@@ -35,7 +35,7 @@ class SearchActivity : AppCompatActivity() {
         binding.searchView.setupWithSearchBar(binding.searchBar)
 
 
-        binding.searchView.editText.setOnEditorActionListener { textView, actionId, event ->
+        binding.searchView.editText.setOnEditorActionListener { textView, _, _ ->
             val query = textView.text.toString()
             if (query.isNotEmpty()) {
                 viewModel.searchEvent(query)

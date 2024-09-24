@@ -16,4 +16,5 @@
     <string name="deskripsi">Deskripsi</string>
     <string name="register">Register</string>
     <string name="recomendation">Recommendation event for you!</string>
+    <string name="detail">Detail Event</string>
 </resources>

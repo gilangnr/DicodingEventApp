@@ -16,7 +16,7 @@ class UpcomingAdapter(private val onItemClick: (ListEventsItem) -> Unit ): ListA
             binding.txtNameUpcoming.text = event.name
             binding.txtCategoryUpcoming.text = event.category
             binding.txtOwnerUpcoming.text = binding.root.context.getString(R.string.owner, event.ownerName)
-            binding.txtQuotaUpcoming.text = binding.root.context.getString(R.string.quota, event.quota.toString())
+            binding.txtQuotaUpcoming.text = binding.root.context.getString(R.string.quota_detail, event.quota - event.registrants)
             Glide.with(binding.imgUpcoming.context)
                 .load(event.imageLogo)
                 .into(binding.imgUpcoming)
