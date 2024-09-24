@@ -68,7 +68,7 @@ class DetailActivity : AppCompatActivity() {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
         val date = inputFormat.parse(event.beginTime)
-        val formattedDate = outputFormat.format(date)
+        val formattedDate = date?.let { outputFormat.format(it) }
 
         binding.nameDetail.text = event.name
         binding.categoryDetail.text = event.category
