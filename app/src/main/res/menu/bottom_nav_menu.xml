@@ -20,4 +20,10 @@
         android:title="@string/title_finished"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/navigation_favorite"
+        android:icon="@drawable/baseline_favorite_24"
+        android:title="@string/favorite"
+        app:showAsAction="never"/>
+
 </menu>

@@ -22,5 +22,8 @@
     <string name="message_internet">Mohon periksa koneksi internet Anda.</string>
     <string name="event_tidak_ditemukan">Event tidak ditemukan</string>
     <string name="message_not_found">Maaf, tidak ada event yang sesuai dengan pencarian Anda.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorite">Favorite</string>
 
 </resources>
