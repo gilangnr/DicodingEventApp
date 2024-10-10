@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
@@ -34,12 +35,12 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-        viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
+        viewModel = ViewModelProvider(this, DetailFactory.getInstance(this)).get(DetailViewModel::class.java)
 
         val eventId = intent.getIntExtra("EVENT_ID", -1)
 
         if (isNetworkAvailable()) {
-            viewModel.getDetail(eventId.toString())
+            viewModel.detailEvent(eventId.toString())
         } else {
             showAlertDialog()
         }
@@ -53,6 +54,11 @@ class DetailActivity : AppCompatActivity() {
             showLoading(it)
         }
 
+        viewModel.errorMessage.observe(this) { error ->
+            if (error != null) {
+                Toast.makeText(this,  error, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -22,7 +22,7 @@ interface ApiService {
     ): ResponseListEvent
 
     @GET("/events/{id}")
-    fun getEvent(@Path("id") id: String): Call<ResponseDetail>
+    suspend fun getEvent(@Path("id") id: String): ResponseDetail
 
     @GET("/events")
     suspend fun searchEvents(@Query("q") query: String): ResponseListEvent

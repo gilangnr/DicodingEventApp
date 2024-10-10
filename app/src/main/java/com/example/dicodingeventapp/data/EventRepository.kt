@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.dicodingeventapp.data.local.room.EventDao
+import com.example.dicodingeventapp.data.remote.response.Event
 import com.example.dicodingeventapp.data.remote.response.ListEventsItem
 import com.example.dicodingeventapp.data.remote.retrofit.ApiService
 
@@ -156,6 +157,18 @@ class EventRepository private constructor(
                 )
             }
             emit(Result.Success(eventList))
+        } catch (e: Exception) {
+            Log.d("EventRepository", e.message.toString())
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
+    fun detailEvent(id: String): LiveData<Result<Event>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getEvent(id)
+            val event = response.event
+            emit(Result.Success(event))
         } catch (e: Exception) {
             Log.d("EventRepository", e.message.toString())
             emit(Result.Error(e.message.toString()))
