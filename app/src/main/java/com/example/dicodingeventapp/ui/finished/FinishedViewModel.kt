@@ -33,7 +33,6 @@ class FinishedViewModel(private val eventRepository: EventRepository) : ViewMode
     fun loadFinishedEvents() {
         _isLoading.value = true
 
-
         val result = eventRepository.loadFinishedEvents()
 
         _events.addSource(result) { result ->

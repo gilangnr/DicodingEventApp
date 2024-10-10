@@ -9,7 +9,7 @@ interface ApiService {
     suspend fun getFinished(@Query("active") active: Int = 0): ResponseListEvent
 
     @GET("/events")
-    fun getUpcoming(@Query("active") active: Int = 1): Call<ResponseListEvent>
+    suspend fun getUpcoming(@Query("active") active: Int = 1): ResponseListEvent
 
     @GET("/events")
     fun getUpcoming5(@Query("active") active: Int = 1,

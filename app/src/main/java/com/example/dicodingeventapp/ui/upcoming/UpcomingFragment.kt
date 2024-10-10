@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -38,7 +39,7 @@ class UpcomingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[UpcomingViewModel::class.java]
+        viewModel = ViewModelProvider(this, UpcomingFactory.getInstance(requireContext())).get(UpcomingViewModel::class.java)
 
         adapter = UpcomingAdapter { event ->
             val intent = Intent(requireContext(), DetailActivity::class.java)
@@ -49,19 +50,28 @@ class UpcomingFragment : Fragment() {
         binding.rvUpcoming.layoutManager = LinearLayoutManager(requireContext())
 
 
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
-        }
-
-        viewModel.events.observe(viewLifecycleOwner) { events ->
-            Log.d("UpcomingFragment", "Events size: ${events.size}")
-            adapter.submitList(events)
-        }
+       observeViewModel()
 
         if (isNetworkAvailable()) {
             viewModel.loadUpcomingEvents()
         } else {
             showAlertDialog()
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            showLoading(isLoading)
+        }
+
+        viewModel.events.observe(viewLifecycleOwner) { events ->
+            adapter.submitList(events)
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

@@ -1,11 +1,10 @@
-package com.example.dicodingeventapp.ui.factory
+package com.example.dicodingeventapp.ui.finished
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.dicodingeventapp.data.EventRepository
 import com.example.dicodingeventapp.di.Injection
-import com.example.dicodingeventapp.ui.finished.FinishedViewModel
 
 class FinishedFactory private constructor(private val eventRepository: EventRepository) :
     ViewModelProvider.NewInstanceFactory() {
