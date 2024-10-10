@@ -3,16 +3,26 @@ package com.example.dicodingeventapp.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.example.dicodingeventapp.data.local.room.EventDao
+import com.example.dicodingeventapp.data.local.entity.FavoriteEvent
+import com.example.dicodingeventapp.data.local.room.FavoriteEventDao
 import com.example.dicodingeventapp.data.remote.response.Event
 import com.example.dicodingeventapp.data.remote.response.ListEventsItem
 import com.example.dicodingeventapp.data.remote.retrofit.ApiService
 
 class EventRepository private constructor(
     private val apiService: ApiService,
-    private val eventDao: EventDao
+    private val favoriteEventDao: FavoriteEventDao
 ){
 
+    fun addFavorite(event: FavoriteEvent) {
+        favoriteEventDao.insert(event)
+    }
+    fun removeFavorite(event: FavoriteEvent) {
+        favoriteEventDao.delete(event)
+    }
+    fun getAllFavorite(): LiveData<List<FavoriteEvent>> {
+        return favoriteEventDao.getAllFavorite()
+    }
     fun loadFinishedEvents(): LiveData<Result<List<ListEventsItem>>> = liveData {
         emit(Result.Loading)
         try {
@@ -180,7 +190,7 @@ class EventRepository private constructor(
         private var instance: EventRepository? = null
         fun getInstance(
             apiService: ApiService,
-            eventDao: EventDao,
+            eventDao: FavoriteEventDao,
         ): EventRepository =
             instance ?: synchronized(this) {
                 instance ?: EventRepository(apiService, eventDao)

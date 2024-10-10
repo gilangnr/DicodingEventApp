@@ -1,13 +1,17 @@
 package com.example.dicodingeventapp.data.local.entity
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
-@Entity(tableName = "event")
+
+@Entity
+@Parcelize
 data class FavoriteEvent (
-    @field:ColumnInfo(name = "id")
    @PrimaryKey(autoGenerate = false)
+   @field:ColumnInfo(name = "id")
     var id: String = "",
 
     @field:ColumnInfo(name = "name")
@@ -15,4 +19,4 @@ data class FavoriteEvent (
 
     @field:ColumnInfo(name = "mediaCover")
     var mediaCover: String? = null
-)
+) : Parcelable
