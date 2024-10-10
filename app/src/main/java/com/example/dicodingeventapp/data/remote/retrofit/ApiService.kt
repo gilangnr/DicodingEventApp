@@ -1,12 +1,12 @@
-package com.example.dicodingeventapp.data.retrofit
+package com.example.dicodingeventapp.data.remote.retrofit
 
-import com.example.dicodingeventapp.data.response.ResponseDetail
-import com.example.dicodingeventapp.data.response.ResponseListEvent
+import com.example.dicodingeventapp.data.remote.response.ResponseDetail
+import com.example.dicodingeventapp.data.remote.response.ResponseListEvent
 import retrofit2.Call
 import retrofit2.http.*
 interface ApiService {
     @GET("/events")
-    fun getFinished(@Query("active") active: Int = 0): Call<ResponseListEvent>
+    suspend fun getFinished(@Query("active") active: Int = 0): ResponseListEvent
 
     @GET("/events")
     fun getUpcoming(@Query("active") active: Int = 1): Call<ResponseListEvent>

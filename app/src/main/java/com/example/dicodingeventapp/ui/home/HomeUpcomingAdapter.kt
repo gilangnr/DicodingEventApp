@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.dicodingeventapp.data.response.ListEventsItem
+import com.example.dicodingeventapp.data.remote.response.ListEventsItem
 import com.example.dicodingeventapp.databinding.ItemCarouselUpcomingBinding
 
 class HomeUpcomingAdapter(private val onItemClick: (ListEventsItem) -> Unit ): ListAdapter<ListEventsItem, HomeUpcomingAdapter.MyViewHolder>(DIFF_CALLBACK) {

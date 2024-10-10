@@ -13,11 +13,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingeventapp.R
 import com.example.dicodingeventapp.databinding.FragmentHomeBinding
 import com.example.dicodingeventapp.ui.detail.DetailActivity
 import com.example.dicodingeventapp.ui.search.SearchActivity
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
@@ -75,7 +77,9 @@ class HomeFragment : Fragment() {
 
         if (isNetworkAvailable()) {
             viewModel.loadUpcomingEvents()
-            viewModel.loadFinishedEvents()
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.loadFinishedEvents()
+            }
         } else {
             showAlertDialog()
         }

@@ -16,7 +16,7 @@ import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.dicodingeventapp.R
-import com.example.dicodingeventapp.data.response.Event
+import com.example.dicodingeventapp.data.remote.response.Event
 import com.example.dicodingeventapp.databinding.ActivityDetailBinding
 import java.text.SimpleDateFormat
 import java.util.Locale

@@ -9,13 +9,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.dicodingeventapp.R
 import com.example.dicodingeventapp.databinding.FragmentFinishedBinding
 import com.example.dicodingeventapp.ui.detail.DetailActivity
+import com.example.dicodingeventapp.ui.factory.FinishedFactory
+import kotlinx.coroutines.launch
 
 class FinishedFragment : Fragment() {
 
@@ -36,21 +40,19 @@ class FinishedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[FinishedViewModel::class.java]
+        viewModel = ViewModelProvider(this, FinishedFactory.getInstance(requireContext())).get(FinishedViewModel::class.java)
+
         adapter = FinishedAdapter { event ->
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.putExtra("EVENT_ID", event.id)
             startActivity(intent)
         }
+
         binding.rvFinished.adapter = adapter
         binding.rvFinished.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
-        }
-        viewModel.events.observe(viewLifecycleOwner) { events ->
-            adapter.submitList(events)
-        }
+        observeViewModel()
+
 
         if (isNetworkAvailable()) {
             viewModel.loadFinishedEvents()
@@ -59,6 +61,22 @@ class FinishedFragment : Fragment() {
         }
 
 
+    }
+
+    private fun observeViewModel() {
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            showLoading(isLoading)
+        }
+
+        viewModel.events.observe(viewLifecycleOwner) { events ->
+            adapter.submitList(events)
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onDestroyView() {
