@@ -17,9 +17,9 @@ interface ApiService {
     ): ResponseListEvent
 
     @GET("/events")
-    fun getFinished5(@Query("active") active: Int = 0,
+    suspend fun getFinished5(@Query("active") active: Int = 0,
                      @Query("limit") limit: Int = 5
-    ): Call<ResponseListEvent>
+    ): ResponseListEvent
 
     @GET("/events/{id}")
     fun getEvent(@Path("id") id: String): Call<ResponseDetail>

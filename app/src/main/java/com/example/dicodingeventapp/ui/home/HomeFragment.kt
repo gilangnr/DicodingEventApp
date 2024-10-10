@@ -73,6 +73,7 @@ class HomeFragment : Fragment() {
 
         if (isNetworkAvailable()) {
             viewModel.loadUpcoming5()
+            viewModel.loadFinished5()
         } else {
             showAlertDialog()
         }
@@ -86,6 +87,10 @@ class HomeFragment : Fragment() {
 
         viewModel.upcomingEvents.observe(viewLifecycleOwner) { events ->
             upcomingAdapter.submitList(events)
+        }
+
+        viewModel.finishedEvents.observe(viewLifecycleOwner) {events ->
+            finishedAdapter.submitList(events)
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
