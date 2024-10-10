@@ -25,5 +25,5 @@ interface ApiService {
     fun getEvent(@Path("id") id: String): Call<ResponseDetail>
 
     @GET("/events")
-    fun searchEvents(@Query("q") query: String): Call<ResponseListEvent>
+    suspend fun searchEvents(@Query("q") query: String): ResponseListEvent
 }

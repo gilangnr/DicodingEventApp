@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -27,7 +28,7 @@ class SearchActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.search)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
+        viewModel = ViewModelProvider(this, SearchFactory.getInstance(this)).get(SearchViewModel::class.java)
         adapter = HomeFinishedAdapter{ event ->
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("EVENT_ID", event.id)
@@ -60,6 +61,11 @@ class SearchActivity : AppCompatActivity() {
             showLoading(isLoading)
         }
 
+        viewModel.errorMessage.observe(this) { error ->
+            if (error != null) {
+                Toast.makeText(this,  error, Toast.LENGTH_SHORT).show()
+            }
+        }
 
     }
 

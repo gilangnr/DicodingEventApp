@@ -132,6 +132,36 @@ class EventRepository private constructor(
         }
     }
 
+    fun searchEvent(q: String) : LiveData<Result<List<ListEventsItem>>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.searchEvents(q)
+            val events = response.listEvents
+            val eventList = events.map { events ->
+                ListEventsItem(
+                    events.summary,
+                    events.mediaCover,
+                    events.registrants,
+                    events.imageLogo,
+                    events.link,
+                    events.description,
+                    events.ownerName,
+                    events.cityName,
+                    events.quota,
+                    events.name,
+                    events.id,
+                    events.beginTime,
+                    events.endTime,
+                    events.category
+                )
+            }
+            emit(Result.Success(eventList))
+        } catch (e: Exception) {
+            Log.d("EventRepository", e.message.toString())
+            emit(Result.Error(e.message.toString()))
+        }
+    }
+
     companion object {
         @Volatile
         private var instance: EventRepository? = null
