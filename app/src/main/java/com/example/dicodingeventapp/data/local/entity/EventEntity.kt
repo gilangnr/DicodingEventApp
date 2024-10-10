@@ -12,6 +12,7 @@ data class FavoriteEvent (
 
     @field:ColumnInfo(name = "name")
     var name: String = "",
+
     @field:ColumnInfo(name = "mediaCover")
     var mediaCover: String? = null
 )
