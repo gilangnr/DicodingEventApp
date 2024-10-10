@@ -10,9 +10,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dicodingeventapp.R
@@ -42,7 +44,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        viewModel = ViewModelProvider(this, HomeFactory.getInstance(requireContext())).get(HomeViewModel::class.java)
         upcomingAdapter = HomeUpcomingAdapter { event ->
             val intent = Intent(requireContext(), DetailActivity::class.java)
             intent.putExtra("EVENT_ID", event.id)
@@ -62,30 +64,34 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        observeViewModel()
 
-        viewModel.upcomingEvents.observe(viewLifecycleOwner) { events ->
-            if (events != null && events.isNotEmpty()) {
-                upcomingAdapter.submitList(events)
-            } else {
-                Log.d("HomeFragment", "No events available")
-            }
-        }
 
         viewModel.finishedEvents.observe(viewLifecycleOwner) { events ->
             finishedAdapter.submitList(events)
         }
 
         if (isNetworkAvailable()) {
-            viewModel.loadUpcomingEvents()
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.loadFinishedEvents()
-            }
+            viewModel.loadUpcoming5()
         } else {
             showAlertDialog()
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            showLoading(it)
+    }
+
+    private fun observeViewModel() {
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            showLoading(isLoading)
+        }
+
+        viewModel.upcomingEvents.observe(viewLifecycleOwner) { events ->
+            upcomingAdapter.submitList(events)
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
