@@ -15,10 +15,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.bumptech.glide.Glide
 import com.example.dicodingeventapp.R
+import com.example.dicodingeventapp.data.local.entity.FavoriteEvent
 import com.example.dicodingeventapp.data.remote.response.Event
 import com.example.dicodingeventapp.databinding.ActivityDetailBinding
+import com.example.dicodingeventapp.ui.favorite.FavoriteViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -26,6 +29,10 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
     private lateinit var viewModel: DetailViewModel
+    private lateinit var favAddViewModel: FavoriteAddViewModel
+
+    private var isFavorite: Boolean = false
+    private lateinit var currentEvent: Event
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -36,6 +43,7 @@ class DetailActivity : AppCompatActivity() {
 
 
         viewModel = ViewModelProvider(this, DetailFactory.getInstance(this)).get(DetailViewModel::class.java)
+        favAddViewModel = ViewModelProvider(this, FavoriteAddFactory.getInstance(application)).get(FavoriteAddViewModel::class.java)
 
         val eventId = intent.getIntExtra("EVENT_ID", -1)
 
@@ -59,6 +67,18 @@ class DetailActivity : AppCompatActivity() {
                 Toast.makeText(this,  error, Toast.LENGTH_SHORT).show()
             }
         }
+
+        binding.fabFavorite.setOnClickListener {
+            if (isFavorite) {
+                favAddViewModel.delete(FavoriteEvent(currentEvent.id.toString(), currentEvent.name, currentEvent.mediaCover ))
+                Toast.makeText(this, "${currentEvent.name} dihapus dari favorit", Toast.LENGTH_SHORT).show()
+            } else {
+                favAddViewModel.insert(FavoriteEvent(currentEvent.id.toString(), currentEvent.name, currentEvent.mediaCover))
+                Toast.makeText(this, "${currentEvent.name} ditambahkan ke favorit", Toast.LENGTH_SHORT).show()
+            }
+            isFavorite = !isFavorite
+            updateFavButton()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -71,6 +91,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setDetailData(event: Event) {
+        currentEvent = event
+
+
         val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
         val date = inputFormat.parse(event.beginTime)
@@ -92,8 +115,17 @@ class DetailActivity : AppCompatActivity() {
             intent.data = Uri.parse(event.link)
             startActivity(intent)
         }
+
+//        checkFavorite(event.id)
     }
 
+//    private fun checkFavorite(eventId: Int) {
+//        favAddViewModel.get
+//    }
+
+    private fun updateFavButton() {
+        binding.fabFavorite.setImageResource(if (isFavorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
+    }
     private fun showLoading(isLoading: Boolean) {
        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }

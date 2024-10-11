@@ -7,11 +7,9 @@ import com.example.dicodingeventapp.data.EventRepository
 import com.example.dicodingeventapp.data.local.FavoriteRepository
 import com.example.dicodingeventapp.data.local.entity.FavoriteEvent
 
-class FavoriteViewModel(application: Application) : ViewModel() {
-    private val favoriteRepository: FavoriteRepository = FavoriteRepository(application)
+class FavoriteViewModel(private val eventRepository: EventRepository) : ViewModel() {
 
-    fun getAllFav(): LiveData<List<FavoriteEvent>> {
-        return favoriteRepository.getAllFavEvent()
-    }
+
+   val favoriteEvent: LiveData<List<FavoriteEvent>> = eventRepository.getAllFavorite()
 
 }

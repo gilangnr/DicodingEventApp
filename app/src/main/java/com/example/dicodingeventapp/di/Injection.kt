@@ -2,6 +2,7 @@ package com.example.dicodingeventapp.di
 
 import android.content.Context
 import com.example.dicodingeventapp.data.EventRepository
+import com.example.dicodingeventapp.data.local.FavoriteRepository
 import com.example.dicodingeventapp.data.local.room.FavoriteEventDatabase
 import com.example.dicodingeventapp.data.remote.retrofit.ApiConfig
 
@@ -12,4 +13,5 @@ object Injection  {
         val dao = database.favoriteDao()
         return EventRepository.getInstance(apiService, dao)
     }
+
 }

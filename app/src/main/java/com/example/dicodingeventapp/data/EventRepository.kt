@@ -13,6 +13,10 @@ class EventRepository private constructor(
     private val apiService: ApiService,
     private val favoriteEventDao: FavoriteEventDao
 ){
+
+    fun getAllFavorite(): LiveData<List<FavoriteEvent>> {
+        return favoriteEventDao.getAllFavorite()
+    }
     fun loadFinishedEvents(): LiveData<Result<List<ListEventsItem>>> = liveData {
         emit(Result.Loading)
         try {
