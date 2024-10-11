@@ -45,7 +45,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-        viewModel.favoriteEvents.observe(viewLifecycleOwner) { favoriteEvents ->
+        viewModel.getAllFav().observe(viewLifecycleOwner) { favoriteEvents ->
             if (favoriteEvents.isEmpty()) {
                 Toast.makeText(requireContext(), "Tidak ada acara favorit", Toast.LENGTH_SHORT).show()
             } else {
