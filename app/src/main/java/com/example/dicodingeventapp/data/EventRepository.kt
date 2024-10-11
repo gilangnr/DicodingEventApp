@@ -13,13 +13,6 @@ class EventRepository private constructor(
     private val apiService: ApiService,
     private val favoriteEventDao: FavoriteEventDao
 ){
-
-    fun addFavorite(event: FavoriteEvent) {
-        favoriteEventDao.insert(event)
-    }
-    fun removeFavorite(event: FavoriteEvent) {
-        favoriteEventDao.delete(event)
-    }
     fun getAllFavorite(): LiveData<List<FavoriteEvent>> {
         return favoriteEventDao.getAllFavorite()
     }
