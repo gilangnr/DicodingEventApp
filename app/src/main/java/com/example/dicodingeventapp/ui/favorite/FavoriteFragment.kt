@@ -2,6 +2,7 @@ package com.example.dicodingeventapp.ui.favorite
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +35,7 @@ class FavoriteFragment : Fragment() {
 
         adapter = FavoriteAdapter { favoriteEvent ->
             val intent = Intent(requireContext(), DetailActivity::class.java)
-            intent.putExtra("EVENT_ID", favoriteEvent.id) // Misalnya ada properti id
+            intent.putExtra("EVENT_ID", favoriteEvent.id.toInt())
             startActivity(intent)
         }
 
