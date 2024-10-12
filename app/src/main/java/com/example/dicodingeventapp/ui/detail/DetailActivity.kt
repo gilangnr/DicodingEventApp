@@ -116,12 +116,15 @@ class DetailActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        checkFavorite(event.id)
+        checkFavorite(event.id)
     }
 
-//    private fun checkFavorite(eventId: Int) {
-//        favAddViewModel.get
-//    }
+    private fun checkFavorite(eventId: Int) {
+        favAddViewModel.getFavoriteEventById(eventId.toString()).observe(this) { favoriteEvent ->
+            isFavorite = favoriteEvent != null
+            updateFavButton()
+        }
+    }
 
     private fun updateFavButton() {
         binding.fabFavorite.setImageResource(if (isFavorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
