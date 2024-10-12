@@ -15,4 +15,7 @@ interface FavoriteEventDao {
 
    @Query("SELECT * FROM FavoriteEvent ORDER BY id ASC")
    fun getAllFavorite(): LiveData<List<FavoriteEvent>>
+
+   @Query("SELECT * FROM FavoriteEvent WHERE id = :id")
+   fun getFavoriteEventById(id: String): LiveData<FavoriteEvent>
 }

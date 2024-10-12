@@ -28,4 +28,8 @@ class FavoriteRepository(application: Application) {
     fun delete(favoriteEvent: FavoriteEvent) {
         executorService.execute { favoriteEventDao.delete(favoriteEvent) }
     }
+
+    fun getFavoriteEventById(id: String): LiveData<FavoriteEvent> {
+        return favoriteEventDao.getFavoriteEventById(id)
+    }
 }
