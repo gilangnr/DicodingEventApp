@@ -16,7 +16,7 @@
 
     <item
         android:id="@+id/navigation_finished"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/baseline_event_finished_24"
         android:title="@string/title_finished"
         app:showAsAction="never"/>
 
@@ -26,4 +26,9 @@
         android:title="@string/favorite"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/settings"
+        android:title="@string/setting"
+        app:showAsAction="never"/>
 </menu>
