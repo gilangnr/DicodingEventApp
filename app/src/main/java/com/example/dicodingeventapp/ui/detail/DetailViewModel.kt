@@ -9,12 +9,6 @@ import androidx.lifecycle.ViewModel
 import com.example.dicodingeventapp.data.EventRepository
 import com.example.dicodingeventapp.data.Result
 import com.example.dicodingeventapp.data.remote.response.Event
-import com.example.dicodingeventapp.data.remote.response.ResponseDetail
-import com.example.dicodingeventapp.data.remote.retrofit.ApiConfig
-import com.example.dicodingeventapp.ui.search.SearchViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class DetailViewModel(private val eventRepository: EventRepository) : ViewModel() {
     private val _events = MediatorLiveData<Event>()

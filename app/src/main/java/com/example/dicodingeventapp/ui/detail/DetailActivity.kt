@@ -7,7 +7,6 @@ import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -15,13 +14,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.bumptech.glide.Glide
 import com.example.dicodingeventapp.R
 import com.example.dicodingeventapp.data.local.entity.FavoriteEvent
 import com.example.dicodingeventapp.data.remote.response.Event
 import com.example.dicodingeventapp.databinding.ActivityDetailBinding
-import com.example.dicodingeventapp.ui.favorite.FavoriteViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 

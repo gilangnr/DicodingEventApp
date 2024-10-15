@@ -2,8 +2,10 @@ package com.example.dicodingeventapp.data.remote.retrofit
 
 import com.example.dicodingeventapp.data.remote.response.ResponseDetail
 import com.example.dicodingeventapp.data.remote.response.ResponseListEvent
-import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
+
 interface ApiService {
     @GET("/events")
     suspend fun getFinished(@Query("active") active: Int = 0): ResponseListEvent

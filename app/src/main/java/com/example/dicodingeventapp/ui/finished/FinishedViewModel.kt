@@ -8,11 +8,6 @@ import androidx.lifecycle.ViewModel
 import com.example.dicodingeventapp.data.EventRepository
 import com.example.dicodingeventapp.data.Result
 import com.example.dicodingeventapp.data.remote.response.ListEventsItem
-import com.example.dicodingeventapp.data.remote.response.ResponseListEvent
-import com.example.dicodingeventapp.data.remote.retrofit.ApiConfig
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class FinishedViewModel(private val eventRepository: EventRepository) : ViewModel() {
 

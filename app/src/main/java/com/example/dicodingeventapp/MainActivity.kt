@@ -1,7 +1,6 @@
 package com.example.dicodingeventapp
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
@@ -14,7 +13,7 @@ import com.example.dicodingeventapp.ui.setting.SettingFactory
 import com.example.dicodingeventapp.ui.setting.SettingPreferences
 import com.example.dicodingeventapp.ui.setting.SettingViewModel
 import com.example.dicodingeventapp.ui.setting.dataStore
-import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
